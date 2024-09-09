@@ -1,0 +1,186 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url(fondo.png);
+}
+
+.titulo h2 {
+  position: absolute;
+  left: 35%;
+  font-weight: bolder;
+}
+
+h3 {
+  position: absolute;
+  top: 30%;
+  left: 10%;
+}
+
+.circle1,
+.circle2,
+.circle3,
+.circle4,
+.circle5,
+.circle6,
+.circle7 {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 50%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 30px;
+}
+
+.circle1 {
+  left: 30%;
+  top: 35%;
+}
+
+.circle1 .linea1 {
+  width: 2px;
+  height: 160px;
+  background-color: black;
+  transform: rotate(-45deg);
+  transform-origin: 0 0;
+  position: absolute;
+  top: 80%;
+  left: 90%;
+  display: none;
+}
+
+.circle2 {
+  left: 20%;
+  top: 55%;
+}
+
+.circle2 .linea2 {
+  width: 2px;
+  height: 147px;
+  background-color: black;
+  transform: rotate(45deg);
+  transform-origin: 0 0;
+  position: absolute;
+  top: -180%;
+  left: 320%;
+  display: none;
+}
+
+.circle3 {
+  left: 40%;
+  top: 55%;
+}
+
+.circle4 {
+  left: 14%;
+  top: 80%;
+}
+
+.circle4 .linea4 {
+  width: 2px;
+  height: 130px;
+  background-color: black;
+  transform: rotate(30deg);
+  transform-origin: 0 0;
+  position: absolute;
+  top: -238%;
+  left: 210%;
+}
+
+.circle5 {
+  left: 25%;
+  top: 80%;
+}
+
+.circle5 .linea5 {
+  width: 2px;
+  height: 125px;
+  background-color: black;
+  transform: rotate(-30deg);
+  transform-origin: 0 0;
+  position: absolute;
+  top: -228%;
+  left: -80%;
+}
+
+.circle6 {
+  left: 36%;
+  top: 80%;
+}
+
+.circle6 .linea6 {
+  width: 2px;
+  height: 115px;
+  background-color: black;
+  transform: rotate(23deg);
+  transform-origin: 0 0;
+  position: absolute;
+  top: -228%;
+  left: 150%;
+}
+
+.circle7 {
+  left: 45%;
+  top: 80%;
+}
+
+.circle7 .linea7 {
+  width: 2px;
+  height: 125px;
+  background-color: black;
+  transform: rotate(-23deg);
+  transform-origin: 0 0;
+  position: absolute;
+  top: -240%;
+  left: -75%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.circle1 .texto,
+.circle2 .texto,
+.circle3 .texto,
+.circle4 .texto,
+.circle5 .texto {
+  position: relative;
+  z-index: 1;
+}
+
+/* Estilos personalizados para el input */
+.container #expresion {
+  background-color: #f8f9fa;  /* Color de fondo gris claro */
+  color: #343a40;  /* Color de texto gris oscuro */
+  border: 4px solid #007bff;  /* Borde azul */
+  border-radius: 8px;  /* Bordes redondeados */
+  padding: 5px 10px;  /* Espaciado interno */
+  font-size: 20px;
+  width: 500px; /* Ajusta el ancho a lo que prefieras */
+  height: 55px;  /* Altura */
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);  /* Sombra */
+  transition: border-color 0.3s ease;  /* Transición suave para cambio de borde */
+}
+
+
+/* Cambia el color del borde y la sombra cuando el input está en foco */
+.container #expresion:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
+}
+
+/* Personalización del placeholder */
+.container #expresion::placeholder {
+  color: #343a40;  /* Mismo color que el texto */
+  opacity: 0.7;  /* Opacidad para hacer el placeholder menos fuerte */
+}
+.input-group-text {
+  background-color: #c7fffa !important;
+  border: 4px solid #c7fffa;  /* Borde opcional para darle un estilo más consistente */
+}

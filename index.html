@@ -1,0 +1,66 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Librería de SweetAlert -->
+    <title>Árbol de Expresiones</title>
+</head>
+<body>
+    <br>
+    <div class="titulo">
+        <h2>Árbol de Expresiones Regulares</h2>
+    </div>
+
+    <h3 id="ejemploGrafico" style="display: none;">Ejemplo Gráfico</h3>
+
+    <div id="arbolCSS" style="display: none;">
+        <div class="circle1">
+            <div class="linea1"></div>
+            <span class="texto"></span>
+        </div>
+        <div class="circle2">
+            <div class="linea2"></div>
+            <span class="texto"></span>
+        </div>
+        <div class="circle3">
+            <div class="linea3"></div>
+            <span class="texto"></span>
+        </div>
+        <div class="circle4">
+            <div class="linea4"></div>
+            <span class="texto"></span>
+        </div>
+        <div class="circle5">
+            <div class="linea5"></div>
+            <span class="texto"></span>
+        </div>
+        <div class="circle6">
+            <div class="linea6"></div>
+            <span class="texto"></span>
+        </div>
+        <div class="circle7">
+            <div class="linea7"></div>
+            <span class="texto"></span>
+        </div>
+    </div>
+    
+    <br>
+
+    <div class="container">
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <img src="cubitos.png" alt="Icono" width="40" height="40"> <!-- Ícono PNG -->
+            </span>
+            <input type="text" id="expresion" placeholder="Ingresa una expresión como 1 * 2, (1 + 1) * 2" class="form-control" aria-label="Expression input">
+        </div>
+        <div class="buttons">
+            <button onclick="crearArbol()" class="btn btn-primary mt-2">Generar Árbol</button>
+            <button id="limpiarBtn" onclick="limpiarArbol()" class="btn btn-danger mt-2 ml-2" style="display: none;">Limpiar</button>
+        </div>
+        <div id="arbol"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
