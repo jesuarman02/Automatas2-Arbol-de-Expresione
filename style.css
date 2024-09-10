@@ -1,3 +1,4 @@
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-image: url(fondo.png);
@@ -27,12 +28,48 @@ h3 {
   background-color: white;
   border: 2px solid black;
   border-radius: 50%;
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 30px;
+  font-size: 20px; 
+  margin: 10px auto; 
+  position: relative; 
+}
+
+#tree-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 20px; 
+}
+
+.child-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; 
+  margin-top: 20px; 
+}
+
+.line {
+  width: 2px;
+  height: 50px;
+  background-color: #000;
+  margin: 0 auto;
+}
+
+@media (max-width: 1400px) {
+  .circle1,
+  .circle2,
+  .circle3,
+  .circle4,
+  .circle5,
+  .circle6,
+  .circle7 {
+    width: 40px;
+    height: 40px;
+    font-size: 16px; 
+  }
 }
 
 .circle1 {
@@ -154,33 +191,55 @@ h3 {
   z-index: 1;
 }
 
-/* Estilos personalizados para el input */
+
 .container #expresion {
-  background-color: #f8f9fa;  /* Color de fondo gris claro */
-  color: #343a40;  /* Color de texto gris oscuro */
-  border: 4px solid #007bff;  /* Borde azul */
-  border-radius: 8px;  /* Bordes redondeados */
-  padding: 5px 10px;  /* Espaciado interno */
+  background-color: #f8f9fa;  
+  color: #343a40; 
+  border: 4px solid #007bff;  
+  border-radius: 8px;  
+  padding: 5px 10px; 
   font-size: 20px;
-  width: 500px; /* Ajusta el ancho a lo que prefieras */
-  height: 55px;  /* Altura */
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);  /* Sombra */
-  transition: border-color 0.3s ease;  /* Transición suave para cambio de borde */
+  width: 500px; 
+  height: 55px;  
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2); 
+  transition: border-color 0.3s ease;  
 }
 
 
-/* Cambia el color del borde y la sombra cuando el input está en foco */
 .container #expresion:focus {
   border-color: #0056b3;
   box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
 }
 
-/* Personalización del placeholder */
 .container #expresion::placeholder {
-  color: #343a40;  /* Mismo color que el texto */
-  opacity: 0.7;  /* Opacidad para hacer el placeholder menos fuerte */
+  color: #343a40;  
+  opacity: 0.7;  
 }
 .input-group-text {
   background-color: #c7fffa !important;
-  border: 4px solid #c7fffa;  /* Borde opcional para darle un estilo más consistente */
+  border: 4px solid #c7fffa; 
+}
+.node {
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  text-align: center;
+  margin: 10px;
+  position: relative;
+  left: 35%;
+}
+.line {
+  width: 2px;
+  height: 20px;
+  background-color: #000;
+  margin: 0 auto;
+}
+.child-container {
+  display: inline-block;
+}
+#tree-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

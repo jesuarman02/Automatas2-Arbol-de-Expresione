@@ -1,128 +1,101 @@
-function crearArbol() {
-  const expresion = document
-    .getElementById("expresion")
-    .value.replace(/\s+/g, ""); // Eliminar espacios
-  const circulos = document.querySelectorAll(
-    ".circle1, .circle2, .circle3, .circle4, .circle5, .circle6, .circle7"
-  );
+function parseExpression(expression) {
+  let operators = ["+", "-", "*", "/"];
+  let stack = [];
+  let lastOpIndex = -1;
+  let lastOp = "";
 
-  //Expresiones regulares para evaluar los tipos de expresiones
-  const expresionSimple = /^\d+[\+\-\*\/\%]\d+$/;
-  const expresionDoble = /^\(\d+[\+\-\*\/\%]\d+\)[\+\-\*\/\%]\d+$/;
-  const expresionParentesis = /^[^\(\)]*(\(\d+[\+\-\*\/\%]\d+\))[^\(\)]*$/;
-
-
-  // Validar la expresión con paréntesis
-  // Match: se utiliza para buscar una coincidencia de una expresión regular en una cadena
+  for (let i = 0; i < expression.length; i++) {
+    let char = expression[i];
+    if (char === "(") {
+      stack.push(i);
+    } else if (char === ")") {
+      stack.pop();
+    } else if (operators.includes(char) && stack.length === 0) {
+      lastOpIndex = i;
+      lastOp = char;
+    }
+  }
   if (
-    /^\(\d+[\+\-\*\/\%]\d+\)[\+\-\*\/\%]\(\d+[\+\-\*\/\%]\d+\)$/.test(expresion)
+    lastOpIndex === -1 &&
+    expression[0] === "(" &&
+    expression[expression.length - 1] === ")"
   ) {
-    const match = expresion.match(
-      /\((\d+)([\+\-\*\/\%])(\d+)\)([\+\-\*\/\%])\((\d+)([\+\-\*\/\%])(\d+)\)/
-    );
-    const [, num1, op1, num2, opExterno, num3, op2, num4] = match;
+    return parseExpression(expression.slice(1, -1).trim());
+  }
 
-    circulos[0].querySelector(".texto").textContent = opExterno;
-    circulos[1].querySelector(".texto").textContent = op1;
-    circulos[2].querySelector(".texto").textContent = op2;
-    circulos[3].querySelector(".texto").textContent = num1;
-    circulos[4].querySelector(".texto").textContent = num2;
-    circulos[5].querySelector(".texto").textContent = num3;
-    circulos[6].querySelector(".texto").textContent = num4;
+  if (lastOpIndex !== -1) {
+    let left = expression.slice(0, lastOpIndex).trim();
+    let right = expression.slice(lastOpIndex + 1).trim();
 
-    // Mostrar los círculos
-    circulos.forEach((circulo) => (circulo.style.display = "block"));
-    document.querySelector(".circle1 .linea1").style.display = "block";
-    document.querySelector(".circle2 .linea2").style.display = "block";
-    document.querySelector(".circle3 .linea3").style.display = "block";
-    document.querySelector(".circle4 .linea4").style.display = "block";
-    document.querySelector(".circle5 .linea5").style.display = "block";
-    document.querySelector(".circle6 .linea6").style.display = "block";
-    document.querySelector(".circle7 .linea7").style.display = "block";
-  } else if (
-    expresionDoble.test(expresion) &&
-    expresionParentesis.test(expresion)
-  ) {
-    const match = expresion.match(
-      /\((\d+)([\+\-\*\/\%])(\d+)\)([\+\-\*\/\%])(\d+)/
-    );
-    const [, numero1, operadorInterno, numero2, operadorExterno, numero3] =
-      match;
-
-    circulos[0].querySelector(".texto").textContent = operadorExterno;
-    circulos[1].querySelector(".texto").textContent = operadorInterno;
-    circulos[3].querySelector(".texto").textContent = numero1;
-    circulos[4].querySelector(".texto").textContent = numero2;
-    circulos[2].querySelector(".texto").textContent = numero3;
-
-    circulos[0].style.display = "block";
-    circulos[1].style.display = "block";
-    circulos[2].style.display = "block";
-    circulos[3].style.display = "block";
-    circulos[4].style.display = "block";
-
-    document.querySelector(".circle1 .linea1").style.display = "block";
-    document.querySelector(".circle2 .linea2").style.display = "block";
-    document.querySelector(".circle4 .linea4").style.display = "block";
-    document.querySelector(".circle5 .linea5").style.display = "block";
-  } else if (expresionSimple.test(expresion)) {
-    const match = expresion.match(/(\d+)([\+\-\*\/\%])(\d+)/);
-    const [, numero1, operador, numero2] = match;
-
-    circulos[0].querySelector(".texto").textContent = operador;
-    circulos[1].querySelector(".texto").textContent = numero1;
-    circulos[2].querySelector(".texto").textContent = numero2;
-
-    circulos[0].style.display = "block";
-    circulos[1].style.display = "block";
-    circulos[2].style.display = "block";
-
-    document.querySelector(".circle1 .linea1").style.display = "block";
-    document.querySelector(".circle2 .linea2").style.display = "block";
-  } else if (expresion.includes("(") || expresion.includes(")")) {
-    Swal.fire({
-      icon: "error",
-      title: "Error de sintaxis",
-      text: "Por favor, asegúrate de que los paréntesis estén correctamente balanceados.",
-    });
+    return {
+      operator: lastOp,
+      left: parseExpression(left),
+      right: parseExpression(right),
+    };
   } else {
-    Swal.fire({
-      icon: "error",
-      title: "Expresión inválida",
-      text: "Por favor ingresa una expresión válida.",
-    });
+    return expression.trim();
+  }
+}
+
+function createNode(value) {
+  let node = document.createElement("div");
+  node.className = "node";
+  node.textContent = value;
+  return node;
+}
+
+function buildTree(node, container) {
+  if (typeof node === "string") {
+    let leafNode = createNode(node);
+    container.appendChild(leafNode);
     return;
   }
 
-  document.getElementById("arbol").style.display = "block";
-  document.getElementById("arbolCSS").style.display = "block";
-  document.getElementById("limpiarBtn").style.display = "inline-block";
+  let rootNode = createNode(node.operator);
+  container.appendChild(rootNode);
+
+  let line = document.createElement("div");
+  line.className = "line";
+  container.appendChild(line);
+
+  let leftRightContainer = document.createElement("div");
+  leftRightContainer.style.display = "flex";
+  leftRightContainer.style.justifyContent = "space-between";
+
+  let leftContainer = document.createElement("div");
+  let rightContainer = document.createElement("div");
+
+  leftContainer.className = "child-container";
+  rightContainer.className = "child-container";
+
+  leftRightContainer.appendChild(leftContainer);
+  leftRightContainer.appendChild(rightContainer);
+
+  container.appendChild(leftRightContainer);
+
+  buildTree(node.left, leftContainer);
+  buildTree(node.right, rightContainer);
 }
-for (const circulo of circulo) {
-  circulo.querySelector(".texto").textContent = "";
-  circulo.style.display = "none";
-  const lineas = circulo.querySelectorAll(
-    ".linea1, .linea2, .linea3, .linea4, .linea5, .linea6, .linea7"
-  );
-  for (const linea of lineas) {
-    linea.style.display = "none";
+
+document.getElementById("generate-btn").addEventListener("click", () => {
+  let expression = document.getElementById("expression-input").value;
+  if (!expression) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Por favor ingresa una expresión válida",
+    });
+    return;
   }
-}
+  let parsedExpression = parseExpression(expression);
+  let treeContainer = document.getElementById("tree-container");
+  treeContainer.innerHTML = "";
+  buildTree(parsedExpression, treeContainer);
+  document.getElementById("limpiarBtn").style.display = "inline-block";
+});
+
 function limpiarArbol() {
-  document.getElementById("expresion").value = "";
-  document.getElementById("arbol").style.display = "none";
-  const circulos = document.querySelectorAll(
-    ".circle1, .circle2, .circle3, .circle4, .circle5, .circle6, .circle7"
-  );
-  circulos.forEach((circulo) => {
-    circulo.querySelector(".texto").textContent = "";
-    circulo.style.display = "none";
-  });
-  const lineas = document.querySelectorAll(
-    ".linea1, .linea2, .linea3, .linea4, .linea5, .linea6, .linea7"
-  );
-  lineas.forEach((linea) => {
-    linea.style.display = "none";
-  });
+  document.getElementById("expression-input").value = "";
+  document.getElementById("tree-container").innerHTML = "";
   document.getElementById("limpiarBtn").style.display = "none";
 }
