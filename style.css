@@ -1,4 +1,3 @@
-
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-image: url(fondo.png);
@@ -7,6 +6,7 @@ body {
 .titulo h2 {
   position: absolute;
   left: 35%;
+  top: 5%;
   font-weight: bolder;
 }
 
@@ -16,13 +16,35 @@ h3 {
   left: 10%;
 }
 
-.circle1,
-.circle2,
-.circle3,
-.circle4,
-.circle5,
-.circle6,
-.circle7 {
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-group .form-control {
+  width: 50%; /* Reducimos el ancho del input */
+  height: auto;
+}
+.input-group #expression-input{
+  position: absolute;
+  top: 200%;
+}
+
+.buttons {
+  position: relative; /* Ajustamos la posición relativa para que el árbol se imprima debajo */
+  margin-top: 20px;
+}
+
+
+#tree-container {
+  margin-top: 40px; /* Aseguramos que el árbol aparezca debajo de los botones */
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.node {
   width: 50px;
   height: 50px;
   background-color: white;
@@ -33,213 +55,27 @@ h3 {
   align-items: center;
   text-align: center;
   font-size: 20px; 
-  margin: 10px auto; 
-  position: relative; 
+  position: relative;
+  margin: 10px;
 }
 
-#tree-container {
+.child {
   display: flex;
-  flex-direction: column;
-  align-items: center; 
-  gap: 20px; 
-}
-
-.child-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%; 
-  margin-top: 20px; 
-}
-
-.line {
-  width: 2px;
-  height: 50px;
-  background-color: #000;
-  margin: 0 auto;
+  justify-content: space-around;
+  width: 100%;
 }
 
 @media (max-width: 1400px) {
-  .circle1,
-  .circle2,
-  .circle3,
-  .circle4,
-  .circle5,
-  .circle6,
-  .circle7 {
+  .node {
     width: 40px;
     height: 40px;
-    font-size: 16px; 
+    font-size: 16px;
   }
 }
-
-.circle1 {
-  left: 30%;
-  top: 35%;
-}
-
-.circle1 .linea1 {
-  width: 2px;
-  height: 160px;
-  background-color: black;
-  transform: rotate(-45deg);
-  transform-origin: 0 0;
+.buttons{
   position: absolute;
-  top: 80%;
-  left: 90%;
-  display: none;
+  top: 25%;
 }
-
-.circle2 {
-  left: 20%;
-  top: 55%;
-}
-
-.circle2 .linea2 {
-  width: 2px;
-  height: 147px;
-  background-color: black;
-  transform: rotate(45deg);
-  transform-origin: 0 0;
-  position: absolute;
-  top: -180%;
-  left: 320%;
-  display: none;
-}
-
-.circle3 {
-  left: 40%;
-  top: 55%;
-}
-
-.circle4 {
-  left: 14%;
-  top: 80%;
-}
-
-.circle4 .linea4 {
-  width: 2px;
-  height: 130px;
-  background-color: black;
-  transform: rotate(30deg);
-  transform-origin: 0 0;
-  position: absolute;
-  top: -238%;
-  left: 210%;
-}
-
-.circle5 {
-  left: 25%;
-  top: 80%;
-}
-
-.circle5 .linea5 {
-  width: 2px;
-  height: 125px;
-  background-color: black;
-  transform: rotate(-30deg);
-  transform-origin: 0 0;
-  position: absolute;
-  top: -228%;
-  left: -80%;
-}
-
-.circle6 {
-  left: 36%;
-  top: 80%;
-}
-
-.circle6 .linea6 {
-  width: 2px;
-  height: 115px;
-  background-color: black;
-  transform: rotate(23deg);
-  transform-origin: 0 0;
-  position: absolute;
-  top: -228%;
-  left: 150%;
-}
-
-.circle7 {
-  left: 45%;
-  top: 80%;
-}
-
-.circle7 .linea7 {
-  width: 2px;
-  height: 125px;
-  background-color: black;
-  transform: rotate(-23deg);
-  transform-origin: 0 0;
-  position: absolute;
-  top: -240%;
-  left: -75%;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-}
-
-.circle1 .texto,
-.circle2 .texto,
-.circle3 .texto,
-.circle4 .texto,
-.circle5 .texto {
-  position: relative;
-  z-index: 1;
-}
-
-
-.container #expresion {
-  background-color: #f8f9fa;  
-  color: #343a40; 
-  border: 4px solid #007bff;  
-  border-radius: 8px;  
-  padding: 5px 10px; 
-  font-size: 20px;
-  width: 500px; 
-  height: 55px;  
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2); 
-  transition: border-color 0.3s ease;  
-}
-
-
-.container #expresion:focus {
-  border-color: #0056b3;
-  box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
-}
-
-.container #expresion::placeholder {
-  color: #343a40;  
-  opacity: 0.7;  
-}
-.input-group-text {
-  background-color: #c7fffa !important;
-  border: 4px solid #c7fffa; 
-}
-.node {
-  display: inline-block;
-  padding: 10px;
-  border: 1px solid #000;
-  border-radius: 50%;
-  text-align: center;
-  margin: 10px;
-  position: relative;
-  left: 35%;
-}
-.line {
-  width: 2px;
-  height: 20px;
-  background-color: #000;
-  margin: 0 auto;
-}
-.child-container {
-  display: inline-block;
-}
-#tree-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.buttons #generate-btn{
+  width: 180%;
 }

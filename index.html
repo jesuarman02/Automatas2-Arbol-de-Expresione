@@ -3,50 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Árbol de Expresiones Matemáticas</title>
   </head>
   <body>
-    <br />
-    <div class="titulo">
-      <h2>Árbol de Expresiones Matemáticas</h2>
-    </div>
-
+    <div class="titulo"><h2>Árbol de Expresiones Matemáticas</h2></div>
     <h3 id="ejemploGrafico" style="display: none">Ejemplo Gráfico</h3>
-
     <div class="container">
       <div class="input-group mb-3">
-        <span class="input-group-text">
-          <img src="cubitos.png" alt="Icono" width="40" height="40" />
-        </span>
-        <input
-          type="text"
-          id="expression-input"
-          placeholder="Ingresa una expresión matemática como 1 * 2 o (1 + 1) * 2"
-          class="form-control"
-        />
+        <span class="input-group-text" id="imagen" ><img src="cubitos.png" alt="Icono" width="50" height="50"></span>
+        <input type="text" id="expression-input" placeholder="Ingresa una expresión matemática" class="form-control" />
       </div>
       <div class="buttons">
-        <button id="generate-btn" class="btn btn-primary mt-2">
-          Generar Árbol
-        </button>
-        <button
-          id="limpiarBtn"
-          onclick="limpiarArbol()"
-          class="btn btn-danger mt-2 ml-2"
-          style="display: none"
-        >
-          Limpiar
-        </button>
+        <button id="generate-btn" class="btn btn-primary mt-2">Generar Árbol</button>
+        <button id="limpiarBtn" class="btn btn-danger mt-2 ml-2" style="display: none">Limpiar</button>
+        <button id="preorder-btn" class="btn btn-secondary mt-2 ml-2" style="display: none">Preorden</button>
+        <button id="inorder-btn" class="btn btn-secondary mt-2 ml-2" style="display: none">Inorder</button>
+        <button id="postorder-btn" class="btn btn-secondary mt-2 ml-2" style="display: none">Postorden</button>
       </div>
       <div id="tree-container"></div>
     </div>
-
     <script src="app.js"></script>
   </body>
 </html>
