@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Árbol de Expresiones Matemáticas</title>
-  </head>
-  <body>
-    <div class="titulo"><h2>Árbol de Expresiones Matemáticas</h2></div>
-    <h3 id="ejemploGrafico" style="display: none">Ejemplo Gráfico</h3>
-    <div class="container">
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="imagen" ><img src="cubitos.png" alt="Icono" width="50" height="50"></span>
-        <input type="text" id="expression-input" placeholder="Ingresa una expresión matemática" class="form-control" />
-      </div>
-      <div class="buttons">
-        <button id="generate-btn" class="btn btn-primary mt-2">Generar Árbol</button>
-        <button id="limpiarBtn" class="btn btn-danger mt-2 ml-2" style="display: none">Limpiar</button>
-        <button id="preorder-btn" class="btn btn-secondary mt-2 ml-2" style="display: none">Preorden</button>
-        <button id="inorder-btn" class="btn btn-secondary mt-2 ml-2" style="display: none">Inorder</button>
-        <button id="postorder-btn" class="btn btn-secondary mt-2 ml-2" style="display: none">Postorden</button>
-      </div>
-      <div id="tree-container"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notación Polaca</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-dark">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Conversor de Notación Polaca</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm">
+                    <form id="notacion">
+                        <div class="mb-3">
+                            <label for="entrada" class="form-label">Ingresa Notación Polaca</label>
+                            <input type="text" class="form-control" id="entrada" placeholder="+ 2 4" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Convertir</button>
+                    </form>
+                    <div class="mt-4" id="resultadoFinal"></div>
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="app.js"></script>
-  </body>
+</body>
 </html>

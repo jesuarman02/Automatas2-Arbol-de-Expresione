@@ -1,103 +1,68 @@
-// Función para limpiar el árbol
-const limpiarArbol = () => {
-  document.getElementById("expression-input").value = ""; // Limpiar el input
-  document.getElementById("tree-container").innerHTML = ""; // Limpiar el contenedor del árbol
-
-  // Esconder botones que no se deben mostrar al limpiar
-  document.getElementById("preorder-btn").style.display = "none";
-  document.getElementById("inorder-btn").style.display = "none";
-  document.getElementById("postorder-btn").style.display = "none";
-  document.getElementById("limpiarBtn").style.display = "none";
-};
-
-// Definir eventos antes de usar las funciones
-document.getElementById("generate-btn").addEventListener("click", () => {
-  const expression = document.getElementById("expression-input").value;
+document.getElementById("notacion").addEventListener("submit", (e) => {
+    e.preventDefault(); 
   
-  if (!validarEntrada(expression)) {
-    Swal.fire({ icon: "error", title: "Error", text: "Expresión inválida" });
-    return;
-  }
-
-  const parsedExpression = parseExpression(expression);
-  const treeContainer = document.getElementById("tree-container");
-  treeContainer.innerHTML = ""; // Limpiar el árbol anterior si existe
-  buildTree(parsedExpression, treeContainer); // Construir nuevo árbol
-
-  // Mostrar botones después de generar el árbol
-  document.getElementById("preorder-btn").style.display = "inline-block";
-  document.getElementById("inorder-btn").style.display = "inline-block";
-  document.getElementById("postorder-btn").style.display = "inline-block";
-  document.getElementById("limpiarBtn").style.display = "inline-block";
-});
-
-document.getElementById("preorder-btn").addEventListener("click", () => {
-  const expression = document.getElementById("expression-input").value;
-  const parsedExpression = parseExpression(expression);
-  Swal.fire("Preorden", preorder(parsedExpression), "success");
-});
-
-document.getElementById("inorder-btn").addEventListener("click", () => {
-  const expression = document.getElementById("expression-input").value;
-  const parsedExpression = parseExpression(expression);
-  Swal.fire("Inorder", inorder(parsedExpression), "success");
-});
-
-document.getElementById("postorder-btn").addEventListener("click", () => {
-  const expression = document.getElementById("expression-input").value;
-  const parsedExpression = parseExpression(expression);
-  Swal.fire("Postorden", postorder(parsedExpression), "success");
-});
-
-document.getElementById("limpiarBtn").addEventListener("click", limpiarArbol);
-
-// Función para construir el árbol
-const buildTree = (node, container) => {
-  const nodeElement = document.createElement("div");
-  nodeElement.classList.add("node");
-  nodeElement.textContent = typeof node === "string" ? node : node.operator;
-  container.appendChild(nodeElement);
-
-  if (typeof node !== "string") {
-    const childContainer = document.createElement("div");
-    childContainer.classList.add("child");
-    
-    buildTree(node.left, childContainer);
-    buildTree(node.right, childContainer);
-    
-    container.appendChild(childContainer);
-  }
-};
-
-// Funciones de recorrido del árbol
-const preorder = (node) => typeof node === "string" ? node + " " : node.operator + " " + preorder(node.left) + preorder(node.right);
-const inorder = (node) => typeof node === "string" ? node + " " : inorder(node.left) + node.operator + " " + inorder(node.right);
-const postorder = (node) => typeof node === "string" ? node + " " : postorder(node.left) + postorder(node.right) + node.operator + " ";
-
-// Validar la expresión de entrada
-const validarEntrada = (expression) => /^[0-9+\-*/\(\)\s]+$/.test(expression);
-
-// Parsear la expresión en un árbol
-const parseExpression = (expression) => {
-  const operators = ["+", "-", "*", "/"];
-  let stack = [], lastOpIndex = -1, lastOp = "";
-
-  for (let i = 0; i < expression.length; i++) {
-    if (expression[i] === "(") stack.push(i);
-    else if (expression[i] === ")") stack.pop();
-    else if (operators.includes(expression[i]) && stack.length === 0) {
-      lastOpIndex = i;
-      lastOp = expression[i];
+    const input = document.getElementById("entrada").value.trim(); // Obtener el valor ingresado
+  
+    if (!esValido(input)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Entrada inválida',
+        text: 'Ingresa una notación polaca válida. No se permiten números negativos.',
+      });
+      return; 
     }
-  }
+  
+    try {
+      const tokens = input.split(" "); 
+      const resultadoInfix = convertirAPrefija(tokens); 
+      const resultado = evaluarInfix(resultadoInfix); 
 
-  if (lastOpIndex === -1 && expression[0] === "(" && expression[expression.length - 1] === ")")
-    return parseExpression(expression.slice(1, -1).trim());
-
-  if (lastOpIndex !== -1) {
-    let left = expression.slice(0, lastOpIndex).trim();
-    let right = expression.slice(lastOpIndex + 1).trim();
-    return { operator: lastOp, left: parseExpression(left), right: parseExpression(right) };
-  }
-  return expression.trim();
-};
+      document.getElementById("resultadoFinal").innerHTML = `
+        <p><strong>Notación Polaca:</strong> ${input}</p>
+        <p><strong>Convertido a Infijo:</strong> ${resultadoInfix}</p>
+        <p><strong>Resultado:</strong> ${resultado}</p>
+      `;
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message,
+      });
+    }
+  });
+  
+  const esValido = (input) => {
+    const regex = /^([-+*/]|\d+)(\s+[-+*/]|\s+\d+)*$/;
+    const numeros = input.match(/\d+/g); 
+    return regex.test(input) && numeros.every(num => parseInt(num) >= 0);
+  };
+  
+  const convertirAPrefija = (tokens) => {
+    const operadores = new Set(["+", "-", "*", "/"]); 
+    let pila = []; 
+  
+    for (let i = tokens.length - 1; i >= 0; i--) {
+      const token = tokens[i];
+  
+      if (operadores.has(token)) {
+        if (pila.length < 2) { 
+          throw new Error("Expresión inválida"); 
+        }
+        const operando1 = pila.pop(); 
+        const operando2 = pila.pop();
+        pila.push(`(${operando1} ${token} ${operando2})`);
+      } else {
+        pila.push(token);
+      }
+    }
+  
+    if (pila.length !== 1) { 
+      throw new Error("Expresión inválida");
+    }
+  
+    return pila.pop(); 
+  };
+  
+  const evaluarInfix = (infix) => {
+    return Function(`return ${infix}`)(); 
+  };
